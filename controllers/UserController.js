@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import { validationResult } from "express-validator";
 
 import UserModel from "../models/User.js";
-import checkAuth from "../utils/checkAuth.js";
 
 export const register = async (req, res) => {
     try {
@@ -109,5 +108,20 @@ export const getMe = async (req, res) => {
         const { passwordHash, ...userData } = user._doc;
 
         res.json(userData);
+    } catch (err) {}
+};
+export const deleteMe = async (req, res) => {
+    try {
+        const result = await UserModel.findByIdAndDelete(req.userId);
+
+        if (!result) {
+            return res.status(400).json({
+                message: "bad request",
+            });
+        }
+
+        res.status(200).json({
+            message: "user removed",
+        });
     } catch (err) {}
 };

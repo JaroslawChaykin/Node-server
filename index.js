@@ -4,7 +4,12 @@ import mongoose from "mongoose";
 import { registerValidation } from "./validations/auth.js";
 import checkAuth from "./utils/checkAuth.js";
 
-import { getMe, login, register } from "./controllers/UserController.js";
+import {
+    deleteMe,
+    getMe,
+    login,
+    register,
+} from "./controllers/UserController.js";
 
 mongoose
     .connect(
@@ -24,6 +29,8 @@ app.post("/auth/login", login);
 app.post("/auth/register", registerValidation, register);
 
 app.get("/auth/me", checkAuth, getMe);
+
+app.delete("/auth/remove", checkAuth, deleteMe);
 
 app.listen(4444, (err) => {
     if (err) {

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-import { validationResult } from "express-validator";
+import {validationResult} from "express-validator";
 
 import UserModel from "../models/User.js";
 
@@ -36,7 +36,7 @@ export const register = async (req, res) => {
             }
         );
 
-        const { passwordHash, ...userData } = user._doc;
+        const {passwordHash, ...userData} = user._doc;
 
         res.json({
             userData,
@@ -52,7 +52,7 @@ export const register = async (req, res) => {
 };
 export const login = async (req, res) => {
     try {
-        const user = await UserModel.findOne({ email: req.body.email });
+        const user = await UserModel.findOne({email: req.body.email});
 
         if (!user) {
             return res.status(404).json({
@@ -81,7 +81,7 @@ export const login = async (req, res) => {
             }
         );
 
-        const { passwordHash, ...userData } = user._doc;
+        const {passwordHash, ...userData} = user._doc;
 
         res.json({
             userData,
@@ -105,10 +105,11 @@ export const getMe = async (req, res) => {
             });
         }
 
-        const { passwordHash, ...userData } = user._doc;
+        const {passwordHash, ...userData} = user._doc;
 
         res.json(userData);
-    } catch (err) {}
+    } catch (err) {
+    }
 };
 export const deleteMe = async (req, res) => {
     try {
@@ -123,5 +124,6 @@ export const deleteMe = async (req, res) => {
         res.status(200).json({
             message: "user removed",
         });
-    } catch (err) {}
+    } catch (err) {
+    }
 };

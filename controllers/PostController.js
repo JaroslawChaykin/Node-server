@@ -69,3 +69,61 @@ export const getOne = async (req, res) => {
         })
     }
 }
+
+export const remove = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        PostModel.findOneAndDelete({
+            _id: postId
+        }).then((doc) => {
+            if (!doc) {
+                return res.status(404).json({
+                    message: 'Not found Post'
+                })
+            }
+
+            res.json({
+                message: 'Removed'
+            })
+        }).catch((err, doc) => {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Can\'t delete post',
+                    err
+                })
+            }
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: 'Bad reuest for posts',
+            err
+        })
+    }
+}
+
+export const update = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        await PostModel.updateOne({
+                _id: postId
+            },
+            {
+                title: req.body.title,
+                text: req.body.text,
+                imageUrl: req.body.imageUrl,
+                user: req.userId,
+                tags: req.body.tags,
+            })
+
+        res.status(200).json({
+            message: 'Updated'
+        })
+
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Not updated'
+        })
+    }
+}

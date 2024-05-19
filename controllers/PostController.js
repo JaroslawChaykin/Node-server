@@ -73,6 +73,10 @@ export const getOne = async (req, res) => {
 export const remove = async (req, res) => {
     try {
         const postId = req.params.id;
+        const post = await PostModel.findById(postId)
+
+//        if (post && post.user._id.equals(req.userId)) {
+//        }
 
         PostModel.findOneAndDelete({
             _id: postId

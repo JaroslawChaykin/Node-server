@@ -22,7 +22,25 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const posts = await PostModel.find().populate('user').exec()
+    const reg = new RegExp(req.query._search)
+
+    let posts = await PostModel.find({
+      title: reg,
+    }).populate('user').exec()
+
+    res.status(200).json(posts)
+  } catch (err) {
+    res.status(500).json({
+      message: 'Bad reuest for posts'
+    })
+  }
+}
+
+export const getUserPosts = async (req, res) => {
+  try {
+    let posts = await PostModel.find({
+      user: req.params.id,
+    }).populate('user').exec()
 
     res.status(200).json(posts)
   } catch (err) {
@@ -74,10 +92,6 @@ export const getOne = async (req, res) => {
 export const remove = async (req, res) => {
   try {
     const postId = req.params.id;
-    const post = await PostModel.findById(postId)
-
-//        if (post && post.user._id.equals(req.userId)) {
-//        }
 
     PostModel.findOneAndDelete({
       _id: postId

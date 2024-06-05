@@ -12,6 +12,8 @@ export const register = async (req, res) => {
     const doc = new UserModel({
       email: req.body.email,
       firstName: req.body.firstName,
+      nicnname: req.body.nickname,
+      birthday: req.body.birthday,
       avatarUrl: req.body.avatarUrl,
       passwordHash: hash,
     });
@@ -35,7 +37,6 @@ export const register = async (req, res) => {
       token,
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json({
       message: "Не удалось зарегистрироваться",
       err: err,
@@ -46,18 +47,12 @@ export const login = async (req, res) => {
   try {
     const user = await UserModel.findOne({email: req.body.email});
 
-    if (!user) {
-      return res.status(404).json({
-        message: "Wrong login or password",
-      });
-    }
-
     const isValidPass = await bcrypt.compare(
       req.body.password,
       user._doc.passwordHash
     );
 
-    if (!isValidPass) {
+    if (!isValidPass || !user) {
       return res.status(404).json({
         message: "Wrong login or password",
       });

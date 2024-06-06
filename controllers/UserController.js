@@ -45,7 +45,9 @@ export const register = async (req, res) => {
 };
 export const login = async (req, res) => {
   try {
-    const user = await UserModel.findOne({email: req.body.email});
+    const {email, nickname} = req.body;
+
+    const user = await UserModel.findOne({$or: [{email}, {nickname}]});
 
     const isValidPass = await bcrypt.compare(
       req.body.password,

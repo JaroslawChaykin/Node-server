@@ -1,7 +1,10 @@
-import {body} from "express-validator";
+import {body, check, oneOf} from "express-validator";
 
 export const loginValidation = [
-  body("email", "Mail bad").isEmail(),
+  oneOf([
+    check('email', "email or nickname").isEmail(),
+    check("nickname", "email or nickname").isLength({min: 4, max: 20}),
+  ]),
   body("password", "password min 6 symbols").isLength({min: 6}),
 ];
 export const registerValidation = [

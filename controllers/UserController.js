@@ -12,7 +12,7 @@ export const register = async (req, res) => {
     const doc = new UserModel({
       email: req.body.email,
       firstName: req.body.firstName,
-      nicnname: req.body.nickname,
+      nickname: req.body.nickname,
       birthday: req.body.birthday,
       avatarUrl: req.body.avatarUrl,
       passwordHash: hash,

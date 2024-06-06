@@ -8,7 +8,7 @@ export const registerValidation = [
   body("email", "Mail bad").isEmail(),
   body("nickname", "nickname min length 4 max length 20").isLength({min: 4, max: 20}),
   body("password", "password min 6 symbols").isLength({min: 6}),
-  body("birthday", "is not Date").isDate(),
+  body("birthday", "is not Date").isISO8601('yyyy-mm-dd').toDate(),
   body("firstName", "Min length name is 2").optional().isLength({min: 2}),
   body("avatarUrl", "Bad link to image").optional().isURL(),
 ];

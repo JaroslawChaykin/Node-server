@@ -125,7 +125,7 @@ export const update = async (req, res) => {
   try {
     const postId = req.params.id;
 
-    await PostModel.updateOne({
+    const post = await PostModel.findByIdAndUpdate({
         _id: postId
       },
       {
@@ -134,11 +134,13 @@ export const update = async (req, res) => {
         imageUrl: req.body.imageUrl,
         user: req.userId,
         tags: req.body.tags,
+      },
+      {
+        returnDocument: 'after',
+        populate: 'user'
       })
 
-    res.status(200).json({
-      message: 'Updated'
-    })
+    res.status(200).json(post)
 
   } catch (err) {
     return res.status(500).json({

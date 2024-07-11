@@ -13,6 +13,7 @@ import {
     UserController,
     PostController,
     CategoriesController,
+    StatisticsController,
 } from "./controllers/index.js";
 
 mongoose
@@ -41,6 +42,7 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 app.use(cors());
 
+// Auth, Users
 app.post(
     "/auth/login",
     loginValidation,
@@ -64,6 +66,7 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
     });
 });
 
+// Posts
 app.get("/posts", PostController.getAll);
 app.get("/posts/:id", PostController.getOne);
 app.get("/posts/user/:id", PostController.getUserPosts);
@@ -93,3 +96,5 @@ app.listen(4444, (err) => {
 
     console.log("Server OK");
 });
+
+app.get("/statistics", StatisticsController.getAllStatistics);

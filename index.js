@@ -86,6 +86,7 @@ app.patch(
     handleValidationErrors,
     PostController.update
 );
+app.patch("/posts/:id/public", checkAuth, PostController.updatePublicStatus);
 
 app.post("/categories", CategoriesController.addCategory);
 app.get("/categories", CategoriesController.getCategories);

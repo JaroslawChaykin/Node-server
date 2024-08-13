@@ -158,6 +158,32 @@ export const update = async (req, res) => {
                 imageUrl: req.body.imageUrl,
                 user: req.userId,
                 tags: req.body.tags,
+                isPublic: req.body.isPublic,
+            },
+            {
+                returnDocument: "after",
+                populate: "user",
+            }
+        );
+
+        res.status(200).json(post);
+    } catch (err) {
+        return res.status(500).json({
+            message: "Not updated",
+        });
+    }
+};
+
+export const updatePublicStatus = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        const post = await PostModel.findByIdAndUpdate(
+            {
+                _id: postId,
+            },
+            {
+                isPublic: req.body.isPublic,
             },
             {
                 returnDocument: "after",

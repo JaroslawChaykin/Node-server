@@ -24,6 +24,10 @@ const PostSchema = new mongoose.Schema(
             required: true,
         },
         imageUrl: String,
+        isPublic: {
+            default: false,
+            type: Boolean
+        }
     },
     {
         timestamps: true,

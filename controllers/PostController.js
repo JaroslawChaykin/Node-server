@@ -26,11 +26,12 @@ export const getAll = async (req, res) => {
 
         let posts = await PostModel.find({
             title: reg,
+            isPublic: true,
         })
             .populate("user")
             .exec();
 
-        res.status(200).json(posts);
+        res.status(200).json(posts.reverse());
     } catch (err) {
         res.status(500).json({
             message: "Bad reuest for posts",
@@ -42,7 +43,23 @@ export const getUserPosts = async (req, res) => {
     try {
         let posts = await PostModel.find({
             user: req.params.id,
+            isPublic: true,
         });
+
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json({
+            message: "Bad reuest for posts",
+        });
+    }
+};
+
+export const getMyPosts = async (req, res) => {
+    try {
+        let posts = await PostModel.find({
+            user: req.userId,
+        });
+        console.log(posts);
 
         res.status(200).json(posts);
     } catch (err) {
@@ -71,7 +88,7 @@ export const getOne = async (req, res) => {
             }
         )
             .then((doc) => {
-                if (!doc) {
+                if (!doc || !doc.isPublic) {
                     return res.status(404).json({
                         message: "Not found Post",
                     });

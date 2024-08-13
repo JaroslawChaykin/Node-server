@@ -70,6 +70,7 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
 app.get("/posts", PostController.getAll);
 app.get("/posts/:id", PostController.getOne);
 app.get("/posts/user/:id", PostController.getUserPosts);
+app.get("/posts/owner/get", checkAuth, PostController.getMyPosts);
 app.post(
     "/posts",
     checkAuth,

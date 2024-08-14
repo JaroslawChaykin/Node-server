@@ -191,7 +191,9 @@ export const updatePublicStatus = async (req, res) => {
             }
         );
 
-        res.status(200).json(post);
+        res.status(200).json({
+            isPublic: post.isPublic
+        });
     } catch (err) {
         return res.status(500).json({
             message: "Not updated",

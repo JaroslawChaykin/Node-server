@@ -8,7 +8,7 @@ import {
     postCreateValidation,
     registerValidation,
 } from "./validations/validations.js";
-import { checkAuth, handleValidationErrors } from "./utils/index.js";
+import { checkAuth, handleValidationErrors, checkUser } from "./utils/index.js";
 import {
     UserController,
     PostController,
@@ -68,7 +68,7 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
 
 // Posts
 app.get("/posts", PostController.getAll);
-app.get("/posts/:id", PostController.getOne);
+app.get("/posts/:id", checkUser, PostController.getOne);
 app.get("/posts/user/:id", PostController.getUserPosts);
 app.get("/posts/owner/get", checkAuth, PostController.getMyPosts);
 app.post(

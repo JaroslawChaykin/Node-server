@@ -1,0 +1,42 @@
+{
+  "1": {
+    "word": "велосипед",
+    "requiredCountWords": 15
+  },
+  "2": {
+    "word": "бутылка",
+    "requiredCountWords": 10
+  },
+  "3": {
+    "word": "светофор",
+    "requiredCountWords": 15
+  },
+  "4": {
+    "word": "авиамотор",
+    "requiredCountWords": 15
+  },
+  "5": {
+    "word": "вариометр",
+    "requiredCountWords": 14
+  },
+  "6": {
+    "word": "развозчик",
+    "requiredCountWords": 14
+  },
+  "7": {
+    "word": "декоратор",
+    "requiredCountWords": 21
+  },
+  "8": {
+    "word": "вагонетка",
+    "requiredCountWords": 12
+  },
+  "9": {
+    "word": "бензопила",
+    "requiredCountWords": 8
+  },
+  "10": {
+    "word": "абонемент",
+    "requiredCountWords": 16
+  }
+}

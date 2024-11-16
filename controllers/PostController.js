@@ -59,7 +59,6 @@ export const getMyPosts = async (req, res) => {
         let posts = await PostModel.find({
             user: req.userId,
         });
-        console.log(posts);
 
         res.status(200).json(posts);
     } catch (err) {
@@ -72,6 +71,7 @@ export const getMyPosts = async (req, res) => {
 export const getOne = async (req, res) => {
     try {
         const postId = req.params.id;
+        const userId = req.userId || null;
 
         PostModel.findOneAndUpdate(
             {
@@ -88,6 +88,12 @@ export const getOne = async (req, res) => {
             }
         )
             .then((doc) => {
+                const isOwner = doc.user._id.equals(userId);
+
+                if (isOwner) {
+                    return res.json(doc);
+                }
+
                 if (!doc || !doc.isPublic) {
                     return res.status(404).json({
                         message: "Not found Post",
@@ -192,7 +198,7 @@ export const updatePublicStatus = async (req, res) => {
         );
 
         res.status(200).json({
-            isPublic: post.isPublic
+            isPublic: post.isPublic,
         });
     } catch (err) {
         return res.status(500).json({

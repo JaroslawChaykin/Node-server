@@ -20,8 +20,8 @@ export const registerValidation = [
 ];
 
 export const postCreateValidation = [
-    body("title", "Min title length is 3")
-        .isLength({ min: 3, max: 20 })
+    body("title", "Min title length is 3 max 100")
+        .isLength({ min: 3, max: 100 })
         .isString(),
     body("text", "Max symbols for text 300").isLength({ max: 1000 }).isString(),
     body("tags", "Need array").optional().isArray(),
